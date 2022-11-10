@@ -1,0 +1,843 @@
+<html>
+
+<head>
+    <title>Extreme Heat</title>
+    <style>
+
+        /* Access-Control-Allow-Origin: *; */
+        
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        #preloader {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #44d4ff;
+            z-index: 200;
+        }
+        
+        #loading {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.2em;
+            text-align: center;
+            height: 200px;
+            width: 200px;
+            color: #fff;
+            margin: auto;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        #header {
+            position: absolute;
+            width: 100%;
+            z-index: 100;
+        }
+
+        #badge {
+            margin-top: 8px;
+            width: 90%;
+            max-width: 640px;
+        }
+        
+        #logo{
+            margin-top: 15px;
+            max-width: 150px;
+        }
+
+        #inner {
+            position: absolute;
+            bottom: 30px;
+            z-index: 100;
+            width: 100%;
+        }
+        
+        #slider {
+            position: absolute;
+            bottom: 430;
+            left: 50;
+            z-index: 100;
+            display: none;
+            animation: fadeIn;
+            -webkit-animation-duration: 10s;
+            animation-duration: 10s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }
+        
+        @-webkit-keyframes tracking-in-expand {
+              0% {
+                letter-spacing: -0.5em;
+                opacity: 0;
+              }
+              40% {
+                opacity: 0.6;
+              }
+              100% {
+                opacity: 1;
+              }
+            }
+            @keyframes tracking-in-expand {
+              0% {
+                letter-spacing: -0.5em;
+                opacity: 0;
+              }
+              40% {
+                opacity: 0.6;
+              }
+              100% {
+                opacity: 1;
+              }
+            }
+        
+        .tracking-in-expand {
+            -webkit-animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+                    animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+        }
+        
+        @-webkit-keyframes fadeIn {
+            0% {opacity: 0;}
+            100% {opacity: 1;}
+         }
+         
+         @keyframes fadeIn {
+            0% {opacity: 0;}
+            100% {opacity: 1;}
+         }
+         
+         .fadeIn {
+            -webkit-animation-name: fadeIn;
+            animation-name: fadeIn;
+         }
+        
+        #slider p{
+            position: absolute;
+            font-size: 20px;
+            font-family: 'Roboto', sans-serif;
+            text-align: left;
+            left: 15;
+            top: -125;
+        }
+        
+        #slider h1{
+            position: absolute;
+            font-size: 36px;
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            left: -15;
+            bottom: -140;
+        }
+
+        input[type="range"].slide {
+            -webkit-appearance: none;
+            background-color: red;
+            height: 6px;
+            width: 150px;
+            border-radius: 3px;
+            transform: rotate(-90deg);
+            float: left;
+            z-index: 500px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            background-color: #fff;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+        }
+        
+        #thermometer{
+            margin-top: 100px;
+            margin-left: 35px;
+            float: left;
+            max-height: 180px;
+        }
+        
+        .button{
+            font-family: 'Roboto', sans-serif;
+            margin: 40px;
+            background-color: #ffd631;
+            color: 000;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 2px;
+            text-align: center;
+        }
+        
+        .button:hover{
+            background-color: #fd6d20;
+            color: #fff;
+        }
+        
+        .learnButton{
+            font-family: 'Roboto', sans-serif;
+            margin: 40px;
+            background-color: #ffd631;
+            color: 000;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 2px;
+            text-align: center;
+        }
+        
+        .learnButton:hover{
+            background-color: #fd6d20;
+            color: #fff;
+            border: 3px solid #fff;
+        }
+        
+        #welcomeText{
+            font-family: 'Roboto', sans-serif;
+            position: absolute;
+            top: 150px;
+            left: 250px;
+            z-index: 100px;
+            animation-name: tracking-in-expand;
+            animation-duration: 5s;
+        }
+        
+        #welcomeText h1{
+            font-size: 57px;
+            color: black;
+            background: #ffd631;
+            width: 350px;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        #welcomeText p{
+            font-size: 24px;
+            color: black;
+            text-align: center;
+        }
+        
+        #iceText{
+            font-family: 'Roboto', sans-serif;
+            position: absolute;
+            top: 150px;
+            right: 180px;
+            display: none;
+            z-index: 100px;
+            animation: fadein 5s;
+        }
+        
+        @keyframes fadein {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        
+        #iceText h1{
+            font-size: 50px;
+            color: black;
+            background: #ffd631;
+            margin: 0 auto;
+            width: 350px;
+            text-align: center;
+        }
+        
+        #iceText p{
+            font-size: 18px;
+            color: black;
+            text-align: left;
+            background-color: #fff;
+            padding-left: 20px;
+            padding-right: 10px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            width: 550px;
+        }
+        
+        #wildfireText{
+            font-family: 'Roboto', sans-serif;
+            position: absolute;
+            top: 150px;
+            right: 250px;
+            display: none;
+            z-index: 100px;
+            animation: fadein 5s;
+        }
+        
+        #wildfireText h1{
+            font-size: 50px;
+            color: black;
+            background: #ffd631;
+            margin: 0 auto;
+            width: 350px;
+            text-align: center;
+        }
+        
+        #wildfireText p{
+            font-size: 18px;
+            color: black;
+            background-color: #fff;
+            padding-left: 20px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            width: 550px;
+            text-align: left;
+        }
+        
+        #droughtText{
+            font-family: 'Roboto', sans-serif;
+            position: absolute;
+            top: 150px;
+            right: 180px;
+            display: none;
+            z-index: 100px;
+            animation: fadein 5s;
+        }
+        
+        #droughtText h1{
+            font-size: 50px;
+            color: black;
+            background: #ffd631;
+            margin: 0 auto;
+            width: 350px;
+            text-align: center;
+        }
+        
+        #droughtText p{
+            font-size: 18px;
+            color: black;
+            text-align: left;
+            background-color: #fff;
+            padding-left: 20px;
+            padding-right: 10px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            width: 550px;
+        }
+        
+        #lastText{
+            font-family: 'Roboto', sans-serif;
+            position: absolute;
+            top: 80px;
+            left: 180px;
+            display: none;
+            z-index: 100px;
+            animation: fadein 5s;
+        }
+        
+        #lastText h1{
+            font-size: 50px;
+            color: black;
+            background: #ffd631;
+            margin: 0 auto;
+            width: 350px;
+            text-align: center;
+        }
+        
+        #lastText p{
+            font-size: 18px;
+            color: black;
+            text-align: left;
+            background-color: #fff;
+            padding-left: 20px;
+            padding-right: 10px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            width: 550px;
+        }
+        
+    </style>
+</head>
+
+
+<body>
+    <!-- <container id="preloader">
+        <div id="loading">
+            <p>Loading, please wait...</p>
+            <img src="img/394.gif">
+        </div>
+    </container> -->
+    
+    <div id="welcomeText"><h1>Welcome!</h1>
+        <p><b>It's warming.</b> <br><b>It's us.</b> <br><b>We're sure.</b> <br><b>It's bad.</b> <br><b>We can fix it.</b></p>
+        Click on the buttons to learn more
+    </div>
+    
+    <div id="iceText"><h1>Ice Melting</h1>
+        <br><p>Since satellite records began 37 years ago, the Arctic’s sea ice has been in dramatic decline, losing on average 3.7% of its mass each decade. 
+        In 2016 sea ice in the Arctic Ocean continued to melt during the polar winter, the first time this has been observed in modern history. Some parts were 20 degrees C warmer than usual. 
+        Recent research shows that the Antarctic contribution to sea level rise is close to zero for up to 1.5 degrees Celsius warming, then jumps to at least 2 metres once we pass approximately 2 degrees Celsius.</p>
+    </div>
+    
+    <div id="wildfireText"><h1>Wildfire</h1>
+        <br><p>Wildfires are also an indicator of our rapidly warming atmosphere. An extremely dry winter coupled with unseasonably hot weather fueled devastating wildfires across North America in 2016. 
+        <br>These included the disastrous fires in Fort McMurray, which led to one of the biggest evacuations in the country's history and went on record as the most expensive disaster in Canadian history with losses expected to total $3.58 billion.</p>
+    </div>
+    
+    <div id="droughtText"><h1>Drought</h1>
+        <br><p>Warming is increasing the severity of drought. A warmer atmosphere sucks more water from the soil, increasing the likelihood for drought conditions. Through 2015 and 2016, drought and rising temperatures left over 36 million people in Eastern and Southern Africa facing hunger. The drought was the worst in Ethiopia’s recent history.</p>
+    </div>
+    
+    <div id="lastText"><h1>How can you help?</h1>
+        <br><p>Right now, annual global average temperature is about 1° Celsius (1.9°F) hotter than pre-industrial levels.<b> We can fix everything.</b> <br>We need to keep fossil fuels in the ground and quickly transition to 100% renewable energy.The most important step you can take now is to join the movement making the transition from fossil fuels possible.</p> <br>
+    <a href="https://350.org/" class="learnButton" onclick="learnMore()">Learn More</a>
+    </div>
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    
+     <div id="header">
+        <img src="img/simple%20logo.png" id="logo">
+<!--        <img src="img/Thermometer.png" id="thermometer">-->
+    </div>
+    
+    <div id="slider">
+        <p>Drag to change</p>
+        <input class="slide" type="range" min="0" max="3" step="1" value="0" oninput="showVal(this.value)">
+        
+        <h1>Temperature</h1>
+    </div>
+
+    <div id="inner">    
+        <a href="#" class="button" onclick="wildfire();">Wildfire</a>
+        <a href="#" class="button" onclick="ice();">Ice Melting</a>
+        <a href="#" class="button" onclick="drought();">Drought</a>
+        <a href="#" class="button" onclick="help();">350</a>
+    </div>
+    
+    <script src="js/three.min.js"></script>
+    <script src="js/Detector.js"></script>
+    <script src="js/ColladaLoader.js"></script>
+    <script src="js/tween.min.js"></script>
+    
+    <script>
+        var scene, camera, renderer, water, waterHT = 1, 
+            lastVal = 0, particleCount = 0,
+            fireParticleCount, fireParticles, pMaterialFire, fireParticle, fireParticleSystem, 
+            particleCount, particles, pMaterial, particle, particleSystem,
+            object, forest = [], itemsToLoad = 1, loaded = 0;
+        
+        var fireIsOn = false, ifFireFirstRun = false;
+        
+        var resetTrees = false;
+        
+        var tree0, tree1, tree2, tree3, tree4, tree5, tree6, tree7, tree8, tree9, tree10, tree11, tree12, tree13, treeGroup;
+        
+        function checkLoad(){
+            loaded++;
+            if(loaded==itemsToLoad) {
+                render();
+                document.getElementById("preloader").style.visibility = 'hidden';
+            }
+        }
+        
+        var textureLoader = new THREE.TextureLoader();
+
+        function init() {
+            if (!Detector.webgl) Detector.addGetWebGLMessage();
+            scene = new THREE.Scene();
+            //add a camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({
+                antialias: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0xcaf8f1, 1);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            document.body.appendChild(renderer.domElement);
+            playing = false;
+
+            var light = new THREE.DirectionalLight(0xffffff, 2);
+            light.position.set(1, 1, 1).normalize();
+            scene.add(light);
+            
+            var loader = new THREE.ColladaLoader();
+            loader.options.convertUpAxis = true;
+            loader.load('tree.dae', function(collada) {
+
+                var dae = collada.scene;
+
+                dae.traverse(function(child) {
+
+                    if (child instanceof THREE.Mesh) {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                    }
+
+                });
+                
+                dae.scale.x = dae.scale.y = dae.scale.z = 20;
+                dae.updateMatrix();
+                scene.add(dae);
+                
+                 water = scene.getObjectByName("Water", true);
+                
+                var object = dae.getObjectByName("Tree", true);
+                console.log(object.position);
+                
+                var light = scene.getObjectByName("Light", true);
+                light = light.children[0];
+                light.castShadow = true;
+                light.distance = 1000;
+                light.penumbra = 2;
+                
+                var light = scene.getObjectByName("Light.1", true);
+                light = light.children[0];
+                light.castShadow = true;
+                light.distance = 1000;
+                light.penumbra = 1;
+                
+                
+                particleCount = 2500;
+                particles = new THREE.Geometry();
+                var pMaterial = new THREE.PointsMaterial({
+                    color: 0xFFFFFF,
+                    size: 2,
+                    map: textureLoader.load("snowflake.png"),
+                    alphaTest: 0.3,
+                    opacity: 0.9,
+                    transparent: true
+                });
+                
+                for (var i = 0; i < particleCount; i++) {
+                    var pX = Math.random() * 300 - 150,
+                        pY = 100,
+                        pZ = Math.random() * 300 - 150;
+                    var particle = new THREE.Vector3(pX, pY, pZ);
+                    particle.velocity = new THREE.Vector3(0, -(Math.random() * 0.9), 0);
+
+                particles.vertices.push(particle);
+            }
+                 particleSystem = new THREE.Points(particles, pMaterial);
+
+            particleSystem.sortParticles = true;
+                
+                fireParticleSystem.visible=false;
+                
+                particleSystem.visible = false;
+                
+                tree0 = scene.getObjectByName('Tree', true);
+                tree1 = scene.getObjectByName('Tree2', true);
+                tree2 = scene.getObjectByName('Tree3', true);
+                tree3 = scene.getObjectByName('Tree4', true);
+                tree4 = scene.getObjectByName('Tree5', true);
+                tree5 = scene.getObjectByName('Tree6', true);
+                tree6 = scene.getObjectByName('Tree7', true);
+                tree7 = scene.getObjectByName('Tree8', true);
+                tree8 = scene.getObjectByName('Tree9', true);
+                tree9 = scene.getObjectByName('Tree10', true);
+                tree10 = scene.getObjectByName('Tree11', true);
+                tree11 = scene.getObjectByName('Tree12', true);
+                tree12 = scene.getObjectByName('Tree13', true);
+                tree13 = scene.getObjectByName('Tree14', true);
+                
+                treeGroup = [tree0, tree1, tree2, tree3, tree4, tree5, tree6, tree7, tree8, tree9, tree10, tree11, tree12, tree13];
+                console.log(treeGroup);
+
+                checkLoad();
+
+            });
+            
+            camera.position.set(-87, 9, -80);
+            camera.rotation.set(0, 1.6, 0);
+
+            fireParticleCount = 2500;
+            fireParticles = new THREE.Geometry();
+            pMaterialFire = new THREE.PointsMaterial({
+                color: 0xfdad5c,
+                size: 30,
+                map: textureLoader.load(
+                    "images/particle-fire.png"
+                ),
+                alphaTest: 0.6,
+                opacity: 0.7,
+                blending: THREE.AdditiveBlending,
+            });
+            
+            for (var p = 0; p < fireParticleCount; p++) {
+
+                var pX = Math.random() * -134 - 94,
+                    pY = Math.random() * 250 - 250,
+                    pZ = Math.random() * -98 - 95;
+                fireParticle = new THREE.Vector3(pX, pY, pZ);
+                fireParticle.velocity = new THREE.Vector3(
+                    0, // x
+                    (Math.random() * 0.9), // y
+                    0); // z
+
+                // add it to the geometry
+                fireParticles.vertices.push(fireParticle);
+            }
+
+            fireParticleSystem = new THREE.Points(
+                fireParticles,
+                pMaterialFire);
+
+            fireParticleSystem.sortFireParticles = true;
+            
+            scene.add(fireParticleSystem);
+
+            fireParticleSystem.position.z = -99;
+
+            };
+        
+        function render() {
+            requestAnimationFrame(render);
+            
+            var timer = Date.now() * 0.0001;
+            
+            TWEEN.update();
+            
+            for (var i = 0; i < particleCount; i++) {
+                    var ptcl = particles.vertices[i];
+                    if (ptcl.y < -10) {
+                        ptcl.y = 100;
+                        ptcl.velocity.y = -(Math.random() * 0.9);
+                    }
+                    ptcl.velocity.y -= Math.random() * 0.001;
+
+                    ptcl.add(ptcl.velocity);
+                }
+                particles && (particles.verticesNeedUpdate = true);
+            
+            if(resetTrees){
+                
+                for (i = 0; i < treeGroup.length; i++) {  
+
+                var thisTree = treeGroup[i];
+                thisTree.visible=true;
+                    thisTree.position.y = 0;
+            }
+                
+                resetTrees = false;
+            }
+            
+            if(fireIsOn){
+                if(ifFireFirstRun){
+                fireParticleSystem.position.z = -99;
+                    ifFireFirstRun = false;
+                    }
+            var pCount = fireParticleCount;
+
+            while (pCount--) {
+                var fireParticle = fireParticles.vertices[pCount];
+                //console.log(particle);
+                // check if we need to reset
+                if (fireParticle.y > 200) {
+                    fireParticle.y = -100;
+                    fireParticle.velocity.y = Math.random() * 0.9;
+                }
+
+                fireParticle.velocity.y += Math.random() * .01;
+                fireParticle.add(
+                    fireParticle.velocity);
+            }
+
+            fireParticles.verticesNeedUpdate = true;
+
+            fireParticleSystem.position.z += 0.5;
+
+            for (i = 0; i < treeGroup.length; i++) {  
+
+                var thisTree = treeGroup[i];
+                var dist = thisTree.position.z - fireParticleSystem.position.z;
+                if (dist < 1) {
+                    thisTree.position.y -= 0.002;
+                }
+                if(thisTree.position.y < -0.10){
+                    thisTree.visible=false;
+                } 
+            }
+
+            for (i = 0; i < fireParticleSystem.lenght; i++) {
+
+                var thisFire = fireParticleSystem[i];
+                if (thisFire.position.y >= 5) {
+                    thisFire.visibility=false;
+                }
+                
+            }
+            }
+
+                renderer.render(scene, camera);
+            }
+            
+            function showVal(val) {
+            if (val != lastVal) {
+                if (val > lastVal) {
+
+                    waterHT -= 0.3;
+                    new TWEEN.Tween(water.scale).to({
+                        y: waterHT
+                    }, 800).easing(TWEEN.Easing.Quadratic.InOut).start();
+
+                    var trees = scene.getObjectByName("TreeG" + val, true);
+                    new TWEEN.Tween(trees.scale).to({
+
+                        y: 0
+
+                    }, 1000).easing(TWEEN.Easing.Elastic.InOut).start();
+
+                } else {
+
+                    waterHT += 0.3;
+                    new TWEEN.Tween(water.scale).to({
+                        y: waterHT
+                    }, 800).easing(TWEEN.Easing.Quadratic.InOut).start();
+
+                    var trees = scene.getObjectByName("TreeG" + lastVal, true);
+                    new TWEEN.Tween(trees.scale).to({
+
+                        y: 1
+
+                    }, 1000).easing(TWEEN.Easing.Elastic.InOut).start();
+
+                }
+                lastVal = val;
+            }
+        }
+        
+        function wildfire(){
+            ifFireFirstRun = true;
+            resetTrees = true;
+            fireIsOn = true;
+            
+            document.getElementById("welcomeText").style.display="none";
+            
+            document.getElementById("slider").style.display="none";
+            
+            document.getElementById("iceText").style.display="none";
+            
+            document.getElementById("droughtText").style.display="none";
+            
+            document.getElementById("lastText").style.display="none";
+
+            setTimeout(function(){
+                document.getElementById("wildfireText").style.display="block";
+            }, 4500);
+            
+            var pos1 = new TWEEN.Tween(camera.position).to({
+                x: -95,
+                y: 8,
+                z: -90
+            },7000).easing(TWEEN.Easing.Quadratic.InOut);
+            var rot1 = new TWEEN.Tween(camera.rotation).to({
+                y: 1.8
+            },7000).easing(TWEEN.Easing.Quadratic.InOut);
+            
+            pos1.start();
+            rot1.start();
+            
+            
+            
+            particleSystem.visible=false;
+            
+            fireParticleSystem.visible=true;
+         }
+        
+        function ice(){
+            
+            document.getElementById("welcomeText").style.display="none";
+            
+            document.getElementById("wildfireText").style.display="none";
+            
+            document.getElementById("droughtText").style.display="none";
+
+            document.getElementById("lastText").style.display="none";
+
+            setTimeout(function(){
+                document.getElementById("iceText").style.display="block";
+            }, 4000);       
+            
+            setTimeout(function(){
+                document.getElementById("slider").style.display="block";
+            }, 5500);
+            
+            var pos1 = new TWEEN.Tween(camera.position).to({
+                x: 33,
+                y: 10,
+                z: -35
+            },8000).easing(TWEEN.Easing.Quadratic.InOut);
+             var rot1 = new TWEEN.Tween(camera.rotation).to({
+                y: 1.6
+            },7000).easing(TWEEN.Easing.Quadratic.InOut);
+            
+            pos1.start();
+            rot1.start();
+            
+            particleSystem.visible=true;
+            fireParticleSystem.visible=false;
+            scene.add(particleSystem);
+        }
+        
+        function drought(){
+            
+            document.getElementById("welcomeText").style.display="none";
+            
+            document.getElementById("slider").style.display="none";
+
+            document.getElementById("iceText").style.display="none";
+
+            document.getElementById("wildfireText").style.display="none";
+ 
+            document.getElementById("lastText").style.display="none";
+            
+            setTimeout(function(){
+                document.getElementById("droughtText").style.display="block";
+            }, 5000);
+            
+            var pos1 = new TWEEN.Tween(camera.position).to({
+                x: 10,
+                y: 7,
+                z: -120
+            },7000).easing(TWEEN.Easing.Quadratic.InOut);
+            var rot1 = new TWEEN.Tween(camera.rotation).to({
+                y: 0.5
+            },7000).easing(TWEEN.Easing.Quadratic.InOut);
+            
+            pos1.start();
+            rot1.start();
+            
+            particleSystem.visible=false;
+            
+            fireParticleSystem.visible=false;
+        }
+        
+        function help(){
+            
+            document.getElementById("welcomeText").style.display="none";
+            
+            document.getElementById("slider").style.display="none";
+            
+            document.getElementById("iceText").style.display="none";
+
+            document.getElementById("droughtText").style.display="none";
+  
+            document.getElementById("wildfireText").style.display="none";
+            
+            setTimeout(function(){
+                document.getElementById("lastText").style.display="block";
+            }, 5000);            
+            
+            var pos1 = new TWEEN.Tween(camera.position).to({
+                x: 144,
+                y: 16,
+                z: -15
+            },7000).easing(TWEEN.Easing.Quadratic.InOut);
+            var rot1 = new TWEEN.Tween(camera.rotation).to({
+                y: 2.5
+            },7000).easing(TWEEN.Easing.Quadratic.InOut);
+            
+            pos1.start();
+            rot1.start();
+            
+            particleSystem.visible=false;
+            
+            fireParticleSystem.visible=false;
+        }
+
+        init();
+    </script>
+</body></html>
